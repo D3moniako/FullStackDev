@@ -1,0 +1,45 @@
+-------------------------------------------------------------------------------
+Test set: com.souhail.weapp.AlphaShopWebService.tests.ControllerTests.SelectArtTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 1, Errors: 3, Skipped: 0, Time elapsed: 11.769 s <<< FAILURE! - in com.souhail.weapp.AlphaShopWebService.tests.ControllerTests.SelectArtTest
+listArtByEan  Time elapsed: 0.515 s  <<< ERROR!
+org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.lang.NullPointerException
+	at com.souhail.weapp.AlphaShopWebService.tests.ControllerTests.SelectArtTest.listArtByEan(SelectArtTest.java:82)
+Caused by: java.lang.NullPointerException
+	at com.souhail.weapp.AlphaShopWebService.tests.ControllerTests.SelectArtTest.listArtByEan(SelectArtTest.java:82)
+
+listArtByCodArt  Time elapsed: 0.026 s  <<< ERROR!
+org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.util.MissingFormatArgumentException: Format specifier '%s'
+	at com.souhail.weapp.AlphaShopWebService.tests.ControllerTests.SelectArtTest.listArtByCodArt(SelectArtTest.java:145)
+Caused by: java.util.MissingFormatArgumentException: Format specifier '%s'
+	at com.souhail.weapp.AlphaShopWebService.tests.ControllerTests.SelectArtTest.listArtByCodArt(SelectArtTest.java:145)
+
+errlistArtByCodArt  Time elapsed: 0.019 s  <<< ERROR!
+org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.util.MissingFormatArgumentException: Format specifier '%s'
+	at com.souhail.weapp.AlphaShopWebService.tests.ControllerTests.SelectArtTest.errlistArtByCodArt(SelectArtTest.java:159)
+Caused by: java.util.MissingFormatArgumentException: Format specifier '%s'
+	at com.souhail.weapp.AlphaShopWebService.tests.ControllerTests.SelectArtTest.errlistArtByCodArt(SelectArtTest.java:159)
+
+listArtByDesc  Time elapsed: 0.14 s  <<< FAILURE!
+java.lang.AssertionError: 
+[codArt=002000301]
+Expected: barcode
+     but none found
+ ; [codArt=002000301]
+Expected: dataCreaz
+     but none found
+ ; [codArt=002000301]
+Expected: famAssort
+     but none found
+ ; [codArt=002000301].idStatoArt
+Expected: 1
+     got: null
+ ; [codArt=002000301]
+Expected: ingredienti
+     but none found
+ ; [codArt=002000301]
+Expected: iva
+     but none found
+
+	at com.souhail.weapp.AlphaShopWebService.tests.ControllerTests.SelectArtTest.listArtByDesc(SelectArtTest.java:180)
+

@@ -1,0 +1,25 @@
+server:
+  port: 5051
+
+spring:
+  application:
+    name: ProductWebService
+  #==========================================================
+  #= PARAMETRI DBMS POSTGRESQL
+  #==========================================================
+  sql:
+    init:
+      mode: always
+      platform: postgres
+  datasource:
+    password: root
+    platfirm: postgres
+    url: jdbc:postgresql://localhost:5433/AlphaShop
+    username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: none # disattivo ddl cosi non posso modificare la struttura creando un database, ma lo creo direttamente io
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
