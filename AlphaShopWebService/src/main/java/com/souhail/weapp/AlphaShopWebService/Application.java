@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AlphaShopWebServiceApplication {
+public class Application { // entry point applicazione
 
 	public static void main(String[] args) {
-		SpringApplication.run(AlphaShopWebServiceApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
