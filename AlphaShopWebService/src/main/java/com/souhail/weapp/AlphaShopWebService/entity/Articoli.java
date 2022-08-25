@@ -1,12 +1,13 @@
 package com.souhail.weapp.AlphaShopWebService.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -37,6 +38,7 @@ public class Articoli implements Serializable {
     // quindi avere quel campo iìcon quella size specifica
     // se il campo inserito non soddisfa la specifica parte un messaggio facendo riferimento a delle variabili, in un file con i messaggi
     @Column(name="CODART")
+
     @Size(min=5,max=20, message="{Size.Articoli.codArt.Validation}")
 //    @NotNull(message="{NotNull.Articoli.codArt.Validation}")
     private String  codArt;

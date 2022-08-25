@@ -104,6 +104,25 @@
 			<scope>compile</scope>
 		</dependency>
 
+		<!-- Annotation per le configurazioni per collegare due servizi-->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+        <dependency>
+            <groupId>com.xantrix.webapp</groupId>
+            <artifactId>gestuser-web-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+		<dependency>
+			<groupId>com.xantrix.webapp</groupId>
+			<artifactId>gestuser-web-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

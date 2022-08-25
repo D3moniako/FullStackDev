@@ -15,6 +15,7 @@ spring:
       authentication-database: admin
       database: ms-users
       host: localhost
-      password: 123Stella
+      password: d3mondante
       port: 37017
-      username: nicola
+      username: souhail
+      auto-index-creation: true

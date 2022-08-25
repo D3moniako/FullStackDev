@@ -39,7 +39,7 @@ public class UtentiControllerTest
     private MockMvc mockMvc;
 	
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	private BCryptPasswordEncoder passwordEncoder;// code injection del bean per la codifica delle password
 	
 	@Autowired
 	private UtentiRepository utentiRepository;
@@ -47,7 +47,9 @@ public class UtentiControllerTest
 
 	@Autowired
 	private WebApplicationContext wac;
-	
+
+
+	// creo come al solito per pogni metodo test appcontext
 	@BeforeEach
 	public void setup() throws JSONException, IOException
 	{
@@ -58,8 +60,8 @@ public class UtentiControllerTest
 	
 	String JsonData =  
 			"{\n" + 
-			"    \"userId\": \"Nicola\",\n" + 
-			"    \"password\": \"123_Stella\",\n" + 
+			"    \"userId\": \"Souhail\",\n" +
+			"    \"password\": \"d3mondante\",\n" +
 			"    \"attivo\": \"Si\",\n" + 
 			"    \"ruoli\": [\n" + 
 			"            \"USER\"\n" + 
@@ -67,7 +69,7 @@ public class UtentiControllerTest
 			"}";
 	
 	@Test
-	@Order(1)
+	@Order(1) // simulo inserimento utente in mongo, test come al solito
 	public void testInsUtente1() throws Exception
 	{
 		mockMvc.perform(MockMvcRequestBuilders.post("/api/utenti/inserisci")
@@ -102,7 +104,7 @@ public class UtentiControllerTest
 						utentiRepository.findByUserId("Nicola").getPassword()))
 				.isEqualTo(true);
 	}
-	
+// crea utente amministratore
 	String JsonData2 = 
 			"{\n" + 
 			"    \"userId\": \"Admin\",\n" + 
