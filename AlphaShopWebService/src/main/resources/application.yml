@@ -26,8 +26,10 @@ spring:
 
       #==========================================================
     #= OPZIONI DI ACCESSO AL MICROSERVIZIO GESTUSER
-    #=
+    #= url di riferimento dell'end point con il quale otteniamo le specifiche dell'utente
+    #= utente di base ReadUser e password, questi parametri saranno ottenuti nella classe userConfig
       #==========================================================
+
   getuser:
     srvUrl: http://localhost:8019/api/utenti/cerca/userid/
     userId: ReadUser

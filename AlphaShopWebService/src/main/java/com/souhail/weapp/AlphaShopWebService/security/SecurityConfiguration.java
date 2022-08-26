@@ -1,8 +1,11 @@
 package com.souhail.weapp.AlphaShopWebService.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,13 +16,17 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.config.annotation.*;
 @Configuration
 @EnableWebSecurity// annotation per abilitare la sicurezza
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // CREO UTENTI HARDCODED
 
-private static String REALM="REAME";// una variabile che serve per configurare i messaggi di errore
+    private static String REALM="REAME";// una variabile che serve per configurare i messaggi di errore
+
+    //NON INSERISCO PIù I DATI HARDCODE//
+    /*@Bean
     @Override
     public UserDetailsService userDetailsService() {
         User.UserBuilder users= User.builder(); // COSTRUISCE UTENTI DIRETAAMENTE DALLA CLASSE USER
@@ -41,7 +48,10 @@ private static String REALM="REAME";// una variabile che serve per configurare i
                 .build()
         );
         return manager;
-    }
+    }*/
+    @Autowired
+    @Qualifier("customerUserDetailsService")// è lo stesso nome inserito nella notazione service , permette di dare altri nomi e usare quelli come riferimento per le varie annotation
+    private UserDetailsService userDetailsService;
 
     //CONFIGURO LA SICUREZZA
 
@@ -69,7 +79,21 @@ private static String REALM="REAME";// una variabile che serve per configurare i
         ;
     }
 
-    @Bean
+     /**
+      *  @param auth
+      * riceve   userDetailsService
+      * che è globalmente visibile e
+      * in base ad esso gestisce l'autenticazione
+     **/
+    @Autowired // faccio l'autowired del metodo stesso per usarlo dove mi pare senza richiamare l'intero oggetto in cui è contenuto
+    public void configurationGlobal(AuthenticationManagerBuilder auth)
+    throws Exception{
+        // passo al gestore di autenticazione  auth lo userDetails e cripto la password , lui quindi
+        auth.
+                userDetailsService(userDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());
+    }
+    @Bean // SISTEMA DI AUTENTICAZIONE
     public AuthEntryPoint getBasicAuthEntryPoint(){
         return new AuthEntryPoint();
     }
@@ -78,6 +102,6 @@ private static String REALM="REAME";// una variabile che serve per configurare i
     public void configure(WebSecurity web) throws Exception{
         web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
         // tutti i metodi che riguardano option e qualsiasi url dovranno essere
-        // IGNORATI DALLA SICUREZZA, è FONDAMENTALE PER FUNZIONARE CON I FRONTEND
+        // IGNORATI DALLA SICUREZZA, è FONDAMENTALE PER FUNZIONARE CON IL FRONTEND
     }
 }

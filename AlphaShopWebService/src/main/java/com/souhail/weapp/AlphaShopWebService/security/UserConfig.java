@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Data
 public class UserConfig
 {
-private String srvUrl;
-private String userId;
+private String srvUrl;// url di riferimento dell'end point con il quale otteniamo le specifich
+    private String userId;
 private String password;
 }

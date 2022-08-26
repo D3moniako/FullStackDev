@@ -20,12 +20,11 @@ public interface ArticoliService  {
 
 //    public Articoli SelByCodArt(String codArt);
 //    ora uso i dto
-    public ArticoliDTO SelByCodArt(String codArt);
+  public ArticoliDTO SelByCodArt(String codArt);
 
     public Articoli SelByCodArt2(String codArt);
 
     public ArticoliDTO SelByBarcode(String barcode);
-
 
     public void DelArticolo(Articoli articolo);
     public void InsArticolo(Articoli articolo);
