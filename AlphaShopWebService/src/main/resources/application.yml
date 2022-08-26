@@ -16,6 +16,8 @@ spring:
     platfirm: postgres
     url: jdbc:postgresql://localhost:5433/AlphaShop
     username: postgres
+    driverClassName: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: none # disattivo ddl cosi non posso modificare la struttura creando un database, ma lo creo direttamente io

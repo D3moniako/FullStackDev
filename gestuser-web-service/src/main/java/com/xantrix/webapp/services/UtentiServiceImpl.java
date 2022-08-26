@@ -1,15 +1,16 @@
 package com.xantrix.webapp.services;
 
 import com.xantrix.webapp.models.Utenti;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Service
+@Transactional(readOnly= true)// nota non funziona se uso import diversi da springframework.annotation
 public class UtentiServiceImpl implements UtentiService{
 
 
-    /**
-     * @return
-     */
+
     @Override
     public List<Utenti> selTutti() {
         return null;

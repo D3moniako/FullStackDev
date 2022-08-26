@@ -7,6 +7,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.IOException;
 
+import com.xantrix.webapp.Application;
+import com.xantrix.webapp.repository.UtentiRepository;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
@@ -17,8 +19,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
-import com.xantrix.webapp.Application;
-import com.xantrix.webapp.repository.UtentiRepository;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class UtentiControllerTest
 
 	// creo come al solito per pogni metodo test appcontext
 	@BeforeEach
-	public void setup() throws JSONException, IOException
+	public void setup() /*throws JSONException, IOException*/
 	{
 		mockMvc = MockMvcBuilders
 				.webAppContextSetup(wac)

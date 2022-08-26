@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
+// TODO :FATTO!
 @AllArgsConstructor
 @Data
 public class InfoMSg {

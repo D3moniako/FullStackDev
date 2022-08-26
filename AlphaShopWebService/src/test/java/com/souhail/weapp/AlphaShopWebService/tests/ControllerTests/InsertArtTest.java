@@ -1,7 +1,5 @@
 package com.souhail.weapp.AlphaShopWebService.tests.ControllerTests;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -43,7 +41,7 @@ public class InsertArtTest
     private ArticoliRepository articoliRepository;// faccio autowired perchè lo userò per fare verifica dei dati che sono stati inseriti e modificati
 
 	@BeforeEach// creo un mockmvc tramite la classe moclmvcbuilder con i metodi weAppCONTEXTsETUP E BUILD
-	public void setup() throws JSONException, IOException
+	public void setup()/* throws JSONException, IOException*/
 	{
 		mockMvc = MockMvcBuilders
 				.webAppContextSetup(wac)
@@ -51,7 +49,7 @@ public class InsertArtTest
 	}
 // rappresenta il codice di test basta prendere un json da postman qualsiasi e aggiungerci gli escape di riga +/n+
     // NOTA ho bisogno solo degli elementi chiave
-private String JsonData =
+private final String JsonData =
 		"{\n" +
 				"    \"codArt\": \"123Test\",\n" + "    \"descrizione\": \"Articolo Unit Test Inserimento\",\n" +
 				"    \"um\": \"PZ\",\n" + "    \"codStat\": \"TESTART\",\n" +
@@ -155,7 +153,7 @@ private String JsonData =
 				.andDo(print());
 	}
 
-	private String JsonDataMod = // JSON PER LA MODIFICA
+	private final String JsonDataMod = // JSON PER LA MODIFICA
 			"{\r\n"
 					+ "    \"codArt\": \"123Test\",\r\n"
 					+ "    \"descrizione\": \"Articolo Unit Test Modifica\",\r\n"

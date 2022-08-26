@@ -1,8 +1,11 @@
 package com.xantrix.webapp.services;
 
 import com.xantrix.webapp.models.Utenti;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+// TODO :FATTO!
 
 public interface UtentiService {
     public List<Utenti> selTutti();

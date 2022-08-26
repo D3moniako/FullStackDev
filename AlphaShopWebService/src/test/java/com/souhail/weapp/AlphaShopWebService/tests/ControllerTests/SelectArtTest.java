@@ -8,8 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.IOException;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.souhail.weapp.AlphaShopWebService.Application;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;

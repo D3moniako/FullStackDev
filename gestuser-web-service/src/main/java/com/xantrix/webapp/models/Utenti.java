@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 //NOTA ORA CHE USO DB NON RELAZIONALI NON CHIAMO PIù ENTITA' MA MODELlI ,
+// TODO FATTO!
 @Document(collection = "utenti") // l'annotation Document è simile a entity ma per i documenti
 @Data
 public class Utenti

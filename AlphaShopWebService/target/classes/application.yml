@@ -16,6 +16,8 @@ spring:
     platfirm: postgres
     url: jdbc:postgresql://localhost:5433/AlphaShop
     username: postgres
+    driverClassName: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: none # disattivo ddl cosi non posso modificare la struttura creando un database, ma lo creo direttamente io
@@ -23,3 +25,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+
+      #==========================================================
+    #= OPZIONI DI ACCESSO AL MICROSERVIZIO GESTUSER
+    #= url di riferimento dell'end point con il quale otteniamo le specifiche dell'utente
+    #= utente di base ReadUser e password, questi parametri saranno ottenuti nella classe userConfig
+      #==========================================================
+
+  getuser:
+    srvUrl: http://localhost:8019/api/utenti/cerca/userid/
+    userId: ReadUser
+    password: D3mondante
