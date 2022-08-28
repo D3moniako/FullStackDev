@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.souhail.weapp.AlphaShopWebService.DTO.ArticoliDTO;
 import com.souhail.weapp.AlphaShopWebService.entity.Articoli;
-import com.souhail.weapp.AlphaShopWebService.entity.InfoMsg;
 import com.souhail.weapp.AlphaShopWebService.exception.BindingException;
 import com.souhail.weapp.AlphaShopWebService.exception.DuplicateException;
 import com.souhail.weapp.AlphaShopWebService.exception.NotFoundException;
@@ -23,7 +22,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 
 // classe creta sulla base degli junit
@@ -114,15 +112,15 @@ public class ArticoliController {
     // quindi nel form di inserimento degli articoli dovrò passare un oggetto con i vari campi e il bindingresult che mi valida i campi
     @SneakyThrows // non ho bisogno di scrivere throws e  tutte le eccezioni da lanciare ma me le trova lui
     @PostMapping(value = "/inserisci")
-    public ResponseEntity<InfoMsg> createArt(@Valid @RequestBody Articoli articolo, BindingResult bindingResult) {
+    public ResponseEntity<Articoli> createArt(@Valid @RequestBody Articoli articolo, BindingResult bindingResult) {
 
 
-        logger.info("Salviamo l'articolo con codice " + articolo.getCodArt());
+        log.info("Salviamo l'articolo con codice " + articolo.getCodArt());
         // 1 CONTROLLO  nel caso i dati passati non siano validi
         // parte l'exception
         if (bindingResult.hasErrors()) {
             String msgErr = errMessage.getMessage(bindingResult.getFieldError(), LocaleContextHolder.getLocale());
-            logger.warn(msgErr);
+            log.warning(msgErr);
             throw new BindingException(msgErr);
         }
 
@@ -130,8 +128,8 @@ public class ArticoliController {
         ArticoliDTO checkArt = articoliService.SelByCodArt(articolo.getCodArt());
         if (checkArt != null) {
             String msgErr = String.format("Articolo %s presente in anagrafica!"
-                    + "Impossibile utilizzare il metodo POST", articolo.getCodArt());
-            logger.warn(msgErr);
+                    + " Impossibile utilizzare il metodo POST", articolo.getCodArt());
+            log.warning(msgErr);
 
             throw new DuplicateException(msgErr);
 
@@ -139,35 +137,36 @@ public class ArticoliController {
 
         articoliService.InsArticolo(articolo);
 
-        return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(), "Inserimento articolo eseguito con successo"), HttpStatus.CREATED);
+        return new ResponseEntity<Articoli>(new HttpHeaders(), HttpStatus.CREATED);
     }
+
 
     @RequestMapping(value = "/modifica", method = RequestMethod.PUT)
     // posso usare il requestmapping con qualsiasi chiamata l'importante che dopo specifico il metodo che voglio usare
-    public ResponseEntity<InfoMsg> updateArt(@Valid @RequestBody Articoli articolo, BindingResult bindingResult) throws BindingException, NotFoundException, DuplicateException {
+    public ResponseEntity<Articoli> updateArt(@Valid @RequestBody Articoli articolo, BindingResult bindingResult) throws BindingException, NotFoundException, DuplicateException {
         // simile al metodo insert
-        logger.info("Aggiorniamo l'articolo con codice " + articolo.getCodArt());
+        log.info("Aggiorniamo l'articolo con codice " + articolo.getCodArt());
 
         if (bindingResult.hasErrors()) {
             String msgErr = errMessage.getMessage(bindingResult.getFieldError(), LocaleContextHolder.getLocale());
-            logger.warn(msgErr);
+            log.warning(msgErr);
             throw new BindingException(msgErr);
         }
 
 
         ArticoliDTO checkArt = articoliService.SelByCodArt(articolo.getCodArt());
-        if (checkArt != null) {
-            String MsgErr = String.format("Articolo %s presente in anagrafica! "
-                    + "Impossibile utilizzare il metodo POST", articolo.getCodArt());
+        if (checkArt == null) {
+            String msgErr = String.format("Articolo %s non presente in anagrafica! "
+                    + "Impossibile utilizzare il metodo PUT", articolo.getCodArt());
 
-            log.warning(MsgErr);
+            log.warning(msgErr);
 
-            throw new DuplicateException(MsgErr);
+            throw new DuplicateException(msgErr);
         }
 
         articoliService.InsArticolo(articolo);
 
-        return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(), "Modifica articolo eseguita con successo"), HttpStatus.CREATED);
+        return new ResponseEntity<Articoli>(new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "elimina/{codart}", method = RequestMethod.DELETE, produces = "application/json")
@@ -188,8 +187,8 @@ public class ArticoliController {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode responseNode = mapper.createObjectNode();// è una mappa chiave valore in cui metto come chiave il code e il messagiio come valore lo statushttp in stringa
 
-        responseNode.put("code", HttpStatus.OK.toString());// il to string mi serve perchè httpStatus è un json
-        responseNode.put("messaggio", "Eliminazione Articoli" + CodArt + "Eseguita con successo");// il to string mi serve perchè httpStatus è un json
+        responseNode.put("codice", HttpStatus.OK.toString());// il to string mi serve perchè httpStatus è un json
+        responseNode.put("messaggio", "Eliminazione Articolo " + CodArt + " Eseguita con successo");// il to string mi serve perchè httpStatus è un json
         // eliminazione articolo eseguita con successo è il valore
 
         return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);

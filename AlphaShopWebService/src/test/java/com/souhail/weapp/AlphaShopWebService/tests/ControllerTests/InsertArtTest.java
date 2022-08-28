@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestMethodOrder(OrderAnnotation.class)
 // si occupa di tutti i metodi per l'inserimento di articoli
 public class InsertArtTest {
-
+    // NOTA SE IL METODO PERFORMER HA UN WARNING VUOL DIRE CHE IL MOCK USATO è INCONGRUENTE!!!
     private MockMvc mockMvc;
 
     @Autowired
@@ -48,7 +48,7 @@ public class InsertArtTest {
     private final String JsonData =
             "{\r\n"
                     + "    \"codArt\": \"123Test\",\r\n"
-                    + "    \"descrizione\": \"Articolo Unit Test Inserimento\",\r\n"
+                    + "    \"descrizione\": \"ARTICOLO UNIT TEST INSERIMENTO\",\r\n"
                     + "    \"um\": \"PZ\",\r\n"
                     + "    \"codStat\": \"TESTART\",\r\n"
                     + "    \"pzCart\": 6,\r\n"
@@ -87,7 +87,7 @@ public class InsertArtTest {
         // ora che l'ho inserito verifico se è stato inserito come volevo
         assertThat(articoliRepository.findByCodArt("123Test")) // verifichiamo che la classe che otteniamo dal metodo findbycodart abbia prop descrizione=" articoli unit ...."
                 .extracting(Articoli::getDescrizione)
-                .isEqualTo("Articoli Unit Test Inserimento");
+                .isEqualTo("ARTICOLO UNIT TEST INSERIMENTO");
     }
 
     @Test
@@ -150,7 +150,7 @@ public class InsertArtTest {
     private final String JsonDataMod = // JSON PER LA MODIFICA
             "{\r\n"
                     + "    \"codArt\": \"123Test\",\r\n"
-                    + "    \"descrizione\": \"Articolo Unit Test Modifica\",\r\n"
+                    + "    \"descrizione\": \"ARTICOLO UNIT TEST MODIFICA\",\r\n"
                     + "    \"um\": \"PZ\",\r\n"
                     + "    \"codStat\": \"TESTART\",\r\n"
                     + "    \"pzCart\": 6,\r\n"
@@ -180,14 +180,14 @@ public class InsertArtTest {
     public void testUpdArticolo() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.put("/api/articoli/modifica")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(JsonData)
+                        .content(JsonDataMod)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()) // come al solito mi aspetto un codice http is created
                 .andDo(print());
 
         assertThat(articoliRepository.findByCodArt("123Test"))
                 .extracting(Articoli::getDescrizione)
-                .isEqualTo("Articolo Unit Test Modifica");
+                .isEqualTo("ARTICOLO UNIT TEST MODIFICA");
     }
 
     @Test
@@ -195,8 +195,8 @@ public class InsertArtTest {
     public void testDelArticolo() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/articoli/elimina/123Test").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value("200 OK"))
-                .andExpect(jsonPath("$.message").value("Eliminazione Articolo 123Test Eseguita Con Successo"))
+                .andExpect(jsonPath("$.codice").value("200 OK"))
+                .andExpect(jsonPath("$.messaggio").value("Eliminazione Articolo 123Test Eseguita con successo"))
                 .andDo(print());
     }
 

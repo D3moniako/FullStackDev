@@ -1,10 +1,5 @@
 package com.souhail.weapp.AlphaShopWebService.tests.RepositoryTests;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-
 import com.souhail.weapp.AlphaShopWebService.Application;
 import com.souhail.weapp.AlphaShopWebService.entity.Articoli;
 import com.souhail.weapp.AlphaShopWebService.repository.ArticoliRepository;
@@ -14,6 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest()
@@ -32,6 +32,7 @@ public class ArticoliRepositoryTest {
         // ma usa o query nativa o altro
         assertEquals(2, items.size()); // numero di elementi ottenuto dalla query è pari a due
     }
+
 
     @Test  // IMPORTANTISSSSIMO
     public void TestfindByDescrizioneLikePage() {
