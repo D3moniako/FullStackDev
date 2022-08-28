@@ -18,13 +18,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
 
 @RestController
-@RequestMapping(value="/api/utenti")
+@RequestMapping(value = "/api/utenti")
 @Log
 public class UtentiController {
     @Autowired
@@ -32,48 +33,46 @@ public class UtentiController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    private  ResourceBundleMessageSource errMessage=new ResourceBundleMessageSource();
+    private ResourceBundleMessageSource errMessage = new ResourceBundleMessageSource();
 
-    @GetMapping(value="/cerca/tutti")
-        public List<Utenti> getAllUser(){
+    @GetMapping(value = "/cerca/tutti")
+    public List<Utenti> getAllUser() {
         log.info("Otteniamo tutti gli utenti");
         return utentiService.selTutti();
     }
-    @SneakyThrows
-    @GetMapping(value="/cerca/userId/{userId}")
-    public Utenti getUtente(@PathVariable("userId") String userId){
 
-        log.info("Otteniamo l'utente"+userId);
-        Utenti utente=utentiService.selUser(userId);
-        if(utente==null){
-        String errMsg=String.format("L'utente %s non è autenticato", userId);
-        log.warning(errMsg);
-        throw new NotFoundException(errMsg);
+    @SneakyThrows
+    @GetMapping(value = "/cerca/userId/{userId}")
+    public Utenti getUtente(@PathVariable("userId") String userId) {
+
+        log.info("Otteniamo l'utente" + userId);
+        Utenti utente = utentiService.selUser(userId);
+        if (utente == null) {
+            String errMsg = String.format("L'utente %s non è autenticato", userId);
+            log.warning(errMsg);
+            throw new NotFoundException(errMsg);
         }
 
         return utente;
     }
+
     ///////////////INSERIMENTO/MODIFICA UTENTE
-    @GetMapping(value="cerca")
+    @GetMapping(value = "cerca")
     //questo metodo non  solo inserisce un nuovo utente ma lo modifica anche la modifica
-    @PostMapping(value="/inserisci")
+    @PostMapping(value = "/inserisci")
     public ResponseEntity<InfoMSg> addNewUser
-    (@Valid @RequestBody Utenti utente,BindingResult bindingResult) throws BindingException{
+    (@Valid @RequestBody Utenti utente, BindingResult bindingResult) throws BindingException {
 
         Utenti checkUtente = utentiService.selUser(utente.getUserId());
 
-        if (checkUtente != null)
-        {
+        if (checkUtente != null) {
             utente.setId(checkUtente.getId());
             log.info("Modifica Utente");
-        }
-        else
-        {
+        } else {
             log.info("Inserimento Nuovo Utente");
         }
 
-        if (bindingResult.hasErrors())
-        {
+        if (bindingResult.hasErrors()) {
             String msgErr = errMessage.getMessage(bindingResult.getFieldError(), LocaleContextHolder.getLocale());
 
             log.warning(msgErr);
@@ -93,15 +92,13 @@ public class UtentiController {
     // ------------------- ELIMINAZIONE UTENTE ------------------------------------
     @DeleteMapping(value = "/elimina/{id}")
     @SneakyThrows
-    public ResponseEntity<?> deleteUser(@PathVariable("id") String userId)
-    {
+    public ResponseEntity<?> deleteUser(@PathVariable("id") String userId) {
         log.info("Eliminiamo l'utente con id " + userId);
 
         Utenti utente = utentiService.selUser(userId);
 
-        if (utente == null)
-        {
-            String MsgErr = String.format("Utente %s non presente in anagrafica! ",userId);
+        if (utente == null) {
+            String MsgErr = String.format("Utente %s non presente in anagrafica! ", userId);
 
             log.warning(MsgErr);
 

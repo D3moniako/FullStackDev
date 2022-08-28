@@ -3,18 +3,14 @@ package com.souhail.weapp.AlphaShopWebService.controlllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.souhail.weapp.AlphaShopWebService.DTO.ArticoliDTO;
-/*import com.souhail.weapp.AlphaShopWebService.entity.Articoli;
-import com.souhail.weapp.AlphaShopWebService.entity.Barcode;*/
 import com.souhail.weapp.AlphaShopWebService.entity.Articoli;
 import com.souhail.weapp.AlphaShopWebService.entity.InfoMsg;
 import com.souhail.weapp.AlphaShopWebService.exception.BindingException;
 import com.souhail.weapp.AlphaShopWebService.exception.DuplicateException;
 import com.souhail.weapp.AlphaShopWebService.exception.NotFoundException;
 import com.souhail.weapp.AlphaShopWebService.service.ArticoliService;
-
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
-import org.apache.catalina.mapper.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
-
-import static org.hibernate.internal.CoreLogging.logger;
 
 // classe creta sulla base degli junit
 @RestController
@@ -136,7 +130,7 @@ public class ArticoliController {
         ArticoliDTO checkArt = articoliService.SelByCodArt(articolo.getCodArt());
         if (checkArt != null) {
             String msgErr = String.format("Articolo %s presente in anagrafica!"
-                    + "impossibile utilizzare il metodo POST", articolo.getCodArt());
+                    + "Impossibile utilizzare il metodo POST", articolo.getCodArt());
             logger.warn(msgErr);
 
             throw new DuplicateException(msgErr);

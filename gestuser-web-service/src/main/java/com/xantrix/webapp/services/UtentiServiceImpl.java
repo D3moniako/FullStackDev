@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-@Service
-@Transactional(readOnly= true)// nota non funziona se uso import diversi da springframework.annotation
-public class UtentiServiceImpl implements UtentiService{
 
+@Service
+@Transactional(readOnly = true)// nota non funziona se uso import diversi da springframework.annotation
+public class UtentiServiceImpl implements UtentiService {
 
 
     @Override

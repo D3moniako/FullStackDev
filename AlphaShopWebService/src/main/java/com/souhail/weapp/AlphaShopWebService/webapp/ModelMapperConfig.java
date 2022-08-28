@@ -2,10 +2,8 @@ package com.souhail.weapp.AlphaShopWebService.webapp;
 
 import com.souhail.weapp.AlphaShopWebService.DTO.ArticoliDTO;
 import com.souhail.weapp.AlphaShopWebService.DTO.BarcodeDTO;
-
 import com.souhail.weapp.AlphaShopWebService.entity.Articoli;
 import com.souhail.weapp.AlphaShopWebService.entity.Barcode;
-
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;

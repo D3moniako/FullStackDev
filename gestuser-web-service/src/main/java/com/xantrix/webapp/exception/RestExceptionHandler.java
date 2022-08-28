@@ -1,7 +1,5 @@
 package com.xantrix.webapp.exception;
 
-import java.time.LocalDate;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,13 +8,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.time.LocalDate;
+
 @ControllerAdvice
 @RestController
-public class RestExceptionHandler extends  ResponseEntityExceptionHandler
-{
+public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
-    public final ResponseEntity<ErrorResponse> exceptionNotFoundHandler(Exception ex)
-    {
+    public final ResponseEntity<ErrorResponse> exceptionNotFoundHandler(Exception ex) {
         ErrorResponse errore = new ErrorResponse();
 
         errore.setDate(LocalDate.now());
@@ -27,8 +25,7 @@ public class RestExceptionHandler extends  ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(BindingException.class)
-    public ResponseEntity<ErrorResponse> exceptionBindingHandler(Exception ex)
-    {
+    public ResponseEntity<ErrorResponse> exceptionBindingHandler(Exception ex) {
         ErrorResponse errore = new ErrorResponse();
 
         errore.setDate(LocalDate.now());
@@ -39,8 +36,7 @@ public class RestExceptionHandler extends  ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(DuplicateException.class)
-    public ResponseEntity<ErrorResponse> exceptionDeplicateRecordHandler(Exception ex)
-    {
+    public ResponseEntity<ErrorResponse> exceptionDeplicateRecordHandler(Exception ex) {
         ErrorResponse errore = new ErrorResponse();
 
         errore.setDate(LocalDate.now());

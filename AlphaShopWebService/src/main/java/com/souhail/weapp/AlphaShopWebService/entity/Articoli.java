@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -57,7 +55,7 @@ public class Articoli implements Serializable {
 
     @Column(name = "PZCART")
     @Max(value = 99, message = "{Size.Articoli.pzCart.Validation}")
-    private String pzCart;
+    private Int pzCart;
 
 
     @Column(name = "PESONETTO")

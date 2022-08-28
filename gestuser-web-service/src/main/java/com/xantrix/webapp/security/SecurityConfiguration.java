@@ -16,63 +16,57 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter
-{
-	private static String REALM = "REAME";
-	
-	//private static final String[] USER_MATCHER = { "/utenti/cerca/**"};
-	private static final String[] ADMIN_MATCHER = { "/utenti/inserisci/**", "/utenti/elimina/**" };
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    private static String REALM = "REAME";
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception
-	{
-			http.csrf().disable()
-				.authorizeRequests()
-				//.antMatchers(USER_MATCHER).hasAnyRole("USER")
-				.antMatchers(ADMIN_MATCHER).hasAnyRole("ADMIN")
-				.anyRequest().authenticated()
-				.and()
-				.httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint()).and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-	}
-	
-	@Bean
-	public AuthEntryPoint getBasicAuthEntryPoint()
-	{
-		return new AuthEntryPoint();
-	}
+    //private static final String[] USER_MATCHER = { "/utenti/cerca/**"};
+    private static final String[] ADMIN_MATCHER = {"/utenti/inserisci/**", "/utenti/elimina/**"};
 
-	/* To allow Pre-flight [OPTIONS] request from browser */
-	@Override
-	public void configure(WebSecurity web)
-	{
-		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
-	}
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeRequests()
+                //.antMatchers(USER_MATCHER).hasAnyRole("USER")
+                .antMatchers(ADMIN_MATCHER).hasAnyRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint()).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    }
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder()
-	{
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public AuthEntryPoint getBasicAuthEntryPoint() {
+        return new AuthEntryPoint();
+    }
 
-	@Bean
-	@Override
-	public UserDetailsService userDetailsService()
-	{
-		UserBuilder users = User.builder();
+    /* To allow Pre-flight [OPTIONS] request from browser */
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+    }
 
-		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-		manager.createUser(users
-				.username("ReadUser")
-				.password(new BCryptPasswordEncoder().encode("BimBumBam_2018"))
-				.roles("USER").build());
+    @Bean
+    @Override
+    public UserDetailsService userDetailsService() {
+        UserBuilder users = User.builder();
 
-		manager.createUser(users
-				.username("Admin")
-				.password(new BCryptPasswordEncoder().encode("MagicaBula_2018"))
-				.roles("USER", "ADMIN").build());
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
 
-		return manager;
-	}
+        manager.createUser(users
+                .username("ReadUser")
+                .password(new BCryptPasswordEncoder().encode("D3mondante.@0071"))
+                .roles("USER").build());
+
+        manager.createUser(users
+                .username("Admin")
+                .password(new BCryptPasswordEncoder().encode("D3mondante.@0071"))
+                .roles("USER", "ADMIN").build());
+
+        return manager;
+    }
 }

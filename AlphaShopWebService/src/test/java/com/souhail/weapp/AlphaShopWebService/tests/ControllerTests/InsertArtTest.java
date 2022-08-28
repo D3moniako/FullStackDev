@@ -1,16 +1,8 @@
 package com.souhail.weapp.AlphaShopWebService.tests.ControllerTests;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.io.IOException;
-
 import com.souhail.weapp.AlphaShopWebService.Application;
 import com.souhail.weapp.AlphaShopWebService.entity.Articoli;
 import com.souhail.weapp.AlphaShopWebService.repository.ArticoliRepository;
-import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -24,6 +16,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ContextConfiguration(classes = Application.class)
 @SpringBootTest
@@ -49,30 +46,32 @@ public class InsertArtTest {
     // rappresenta il codice di test basta prendere un json da postman qualsiasi e aggiungerci gli escape di riga +/n+
     // NOTA ho bisogno solo degli elementi chiave
     private final String JsonData =
-            "{\n" +
-                    "    \"codArt\": \"123Test\",\n" + "    \"descrizione\": \"Articolo Unit Test Inserimento\",\n" +
-                    "    \"um\": \"PZ\",\n" + "    \"codStat\": \"TESTART\",\n" +
-                    "    \"pzCart\": 6,\n" +
-                    "    \"pesoNetto\": 1.75,\n" +
-                    "    \"idStatoArt\": \"1\",\n" +
-                    "    \"dataCreazione\": \"2019-05-14\",\n" +
-                    "    \"barcode\": [\n" +
-                    "        {\n" +
-                    "            \"barcode\": \"12345678\",\n" +
-                    "            \"idTipoArt\": \"CP\"\n" +
-                    "        }\n" +
-                    "    ],\n" +
-                    "    \"ingredienti\": {\n" +
-                    "	 \"codArt\" : \"123Test\",\n" +
-                    "	 \"info\" : \"TEST INGREDIENTI\"\n" +
-                    "	},\n" +
-                    "    \"iva\": {\n" +
-                    "        \"idIva\": 22\n" +
-                    "    },\n" +
-                    "    \"famAssort\": {\n" +
-                    "     \"id\": 1\n" +
-                    "    }\n" +
-                    "}";
+            "{\r\n"
+                    + "    \"codArt\": \"123Test\",\r\n"
+                    + "    \"descrizione\": \"Articolo Unit Test Inserimento\",\r\n"
+                    + "    \"um\": \"PZ\",\r\n"
+                    + "    \"codStat\": \"TESTART\",\r\n"
+                    + "    \"pzCart\": 6,\r\n"
+                    + "    \"pesoNetto\": 1.75,\r\n"
+                    + "    \"idStatoArt\": \"1\",\r\n"
+                    + "    \"dataCreaz\": \"2019-05-14\",\r\n"
+                    + "    \"barcode\": [\r\n"
+                    + "        {\r\n"
+                    + "            \"barcode\": \"12345678\",\r\n"
+                    + "            \"idTipoArt\": \"CP\"\r\n"
+                    + "        }\r\n"
+                    + "    ],\r\n"
+                    + "    \"ingredienti\": {\r\n"
+                    + "		\"codArt\" : \"123Test\",\r\n"
+                    + "		\"info\" : \"TEST INGREDIENTI\"\r\n"
+                    + "	},\r\n"
+                    + "    \"iva\": {\r\n"
+                    + "        \"idIva\": 22\r\n"
+                    + "    },\r\n"
+                    + "    \"famAssort\": {\r\n"
+                    + "        \"id\": 1\r\n"
+                    + "    }\r\n"
+                    + "}";
 
     @Test
     @Order(1)

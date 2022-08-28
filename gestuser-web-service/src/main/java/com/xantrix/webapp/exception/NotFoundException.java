@@ -11,14 +11,13 @@ public class NotFoundException extends Exception {
 
     private String messaggio = "Elemento Ricercato Non Trovato!";
 
-    public NotFoundException()
-    {
+    public NotFoundException() {
         super();
     }
 
-    public NotFoundException(String messaggio)
-    {
+    public NotFoundException(String messaggio) {
         super(messaggio);
         this.messaggio = messaggio;
-    }  }
+    }
+}
 

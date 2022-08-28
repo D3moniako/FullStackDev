@@ -7,10 +7,10 @@ server:
 spring:
   application:
     name: GestUser
-#==========================================================
-#= PARAMETRI DB MONGODB
+  #==========================================================
+  #= PARAMETRI DB MONGODB
 
- # c'è l'autentication db che è admin, use admin poi ora
+  # c'è l'autentication db che è admin, use admin poi ora
   #uso mongo -u admin --authenticationDatabase admin -p root e mi autentico come admin nome admin
   # ora creo user condb.createUser({
   #    user:"pippo",
@@ -22,7 +22,7 @@ spring:
   #ora  che sono nel nuovo utente uso
   # use ms-users per spostarmi nel db del nuovo utente
   # qui o creo le mie query o permetto tramite file yml a spring di farlo!!!
-#==========================================================
+  #==========================================================
   data:
     mongodb:
       authentication-database: admin
