@@ -11,23 +11,23 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name="IVA")
+@Table(name = "IVA")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Iva {
-@Id
-    @Column(name="IDIVA")
+    @Id
+    @Column(name = "IDIVA")
     private int idIva;
 
-    @Column(name="DESCRIZIONE")
-    private String descrizione ;
+    @Column(name = "DESCRIZIONE")
+    private String descrizione;
 
-    @Column(name="ALIQUOTA")
+    @Column(name = "ALIQUOTA")
     private int aliquota;
 
-    @OneToMany(fetch=FetchType.LAZY,mappedBy ="iva")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "iva")
     @JsonBackReference
     private
-    Set<Articoli> articoli= new HashSet<>();
+    Set<Articoli> articoli = new HashSet<>();
 
 }

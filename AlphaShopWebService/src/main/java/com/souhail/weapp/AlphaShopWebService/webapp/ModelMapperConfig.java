@@ -1,4 +1,5 @@
 package com.souhail.weapp.AlphaShopWebService.webapp;
+
 import com.souhail.weapp.AlphaShopWebService.DTO.ArticoliDTO;
 import com.souhail.weapp.AlphaShopWebService.DTO.BarcodeDTO;
 
@@ -14,27 +15,24 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration // indica che è un componente di configurazione
 public class ModelMapperConfig {
-        @Bean
-        public ModelMapper modelMapper()
-        {
-            ModelMapper modelMapper = new ModelMapper();
-            modelMapper.getConfiguration().setSkipNullEnabled(true);
-            modelMapper.addMappings(articoliMapping);
+    @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setSkipNullEnabled(true);
+        modelMapper.addMappings(articoliMapping);
 
-            modelMapper.addMappings(new PropertyMap<Barcode, BarcodeDTO>()
-            {
-                @Override
-                protected void configure()
-                {
-                    map().setIdTipoArt(source.getIdTipoArt());
-                }
-            });
+        modelMapper.addMappings(new PropertyMap<Barcode, BarcodeDTO>() {
+            @Override
+            protected void configure() {
+                map().setIdTipoArt(source.getIdTipoArt());
+            }
+        });
 
-            modelMapper.addConverter(articoliConverter);
+        modelMapper.addConverter(articoliConverter);
 
-            return modelMapper;
+        return modelMapper;
 
-        }
+    }
     /*@Bean // creo un bean per instanziare il mapper
     public ModelMapper modelMapper()// metodo che ritorna il modell mapper stesso
     {
@@ -60,19 +58,17 @@ public class ModelMapperConfig {
 */
     // creo new metodo in cui configuro la mappatura
 
-    PropertyMap< Articoli, ArticoliDTO> articoliMapping= new PropertyMap< Articoli, ArticoliDTO>()
-    {
-        protected void configure()
-        {
+    PropertyMap<Articoli, ArticoliDTO> articoliMapping = new PropertyMap<Articoli, ArticoliDTO>() {
+        protected void configure() {
             map().setDataCreazione(source.getDataCreaz());// dalla prop dataCreazione del dto, corrisponde dataCreaz del model cioè origine
-        // quindi se voglio modificare i nomi devo poi specificarlo qui!!1
+            // quindi se voglio modificare i nomi devo poi specificarlo qui!!1
         }
     };
 
-    Converter<String,String> articoliConverter= new Converter<String,String>(){
+    Converter<String, String> articoliConverter = new Converter<String, String>() {
         @Override
-        public String convert (MappingContext<String,String> context){
-            return context.getSource()==null ? "": context.getSource().trim();
+        public String convert(MappingContext<String, String> context) {
+            return context.getSource() == null ? "" : context.getSource().trim();
         }
     };
 

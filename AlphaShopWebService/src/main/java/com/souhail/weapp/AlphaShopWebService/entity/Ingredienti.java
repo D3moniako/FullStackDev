@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="INGREDIENTI")
+@Table(name = "INGREDIENTI")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,15 +19,16 @@ public class Ingredienti implements Serializable {
 
     public static final long serialVersionUID = -352499447670116376L;
     @Id
-    @Column(name="CODART")
+    @Column(name = "CODART")
     private String codArt;
 
-    @Column(name="INFO")
+    @Column(name = "INFO")
     private String info;
 
     @OneToOne
     @PrimaryKeyJoinColumn// il punto di intersezione si basa su primarykey senza doverlo specificare
-    @JsonIgnore // SIMILE ALLA JSONBACKREFERENCE, riferimento inverso al json dall'altra parte, in mancanza di esse , avrei problemi di serializzazione
+    @JsonIgnore
+    // SIMILE ALLA JSONBACKREFERENCE, riferimento inverso al json dall'altra parte, in mancanza di esse , avrei problemi di serializzazione
     private Articoli articolo;
 
 }

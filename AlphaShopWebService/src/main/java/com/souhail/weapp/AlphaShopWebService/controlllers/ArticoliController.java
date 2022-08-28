@@ -34,7 +34,7 @@ import static org.hibernate.internal.CoreLogging.logger;
 
 // classe creta sulla base degli junit
 @RestController
-@RequestMapping( "api/articoli")
+@RequestMapping("api/articoli")
 @Log // permette uso dei log senza instanziare classe
 @CrossOrigin("http://localhost:4200")
 public class ArticoliController {
@@ -120,7 +120,7 @@ public class ArticoliController {
     // quindi nel form di inserimento degli articoli dovrò passare un oggetto con i vari campi e il bindingresult che mi valida i campi
     @SneakyThrows // non ho bisogno di scrivere throws e  tutte le eccezioni da lanciare ma me le trova lui
     @PostMapping(value = "/inserisci")
-    public ResponseEntity<InfoMsg> createArt(@Valid @RequestBody Articoli articolo, BindingResult bindingResult)  {
+    public ResponseEntity<InfoMsg> createArt(@Valid @RequestBody Articoli articolo, BindingResult bindingResult) {
 
 
         logger.info("Salviamo l'articolo con codice " + articolo.getCodArt());
@@ -129,41 +129,40 @@ public class ArticoliController {
         if (bindingResult.hasErrors()) {
             String msgErr = errMessage.getMessage(bindingResult.getFieldError(), LocaleContextHolder.getLocale());
             logger.warn(msgErr);
-        throw  new BindingException(msgErr);
+            throw new BindingException(msgErr);
         }
 
         // 2 Controllo che il CodArt è già presente se DISABILITATO QUESTO METODO PER INSERT TRAMITE POST PERMETTEREBBE ANCHE DI FARE L'UPDATE
-         ArticoliDTO checkArt= articoliService.SelByCodArt(articolo.getCodArt());
-        if (checkArt!=null)
-        {
+        ArticoliDTO checkArt = articoliService.SelByCodArt(articolo.getCodArt());
+        if (checkArt != null) {
             String msgErr = String.format("Articolo %s presente in anagrafica!"
-                    +"impossibile utilizzare il metodo POST",articolo.getCodArt());
+                    + "impossibile utilizzare il metodo POST", articolo.getCodArt());
             logger.warn(msgErr);
 
-            throw  new DuplicateException(msgErr);
+            throw new DuplicateException(msgErr);
 
         }
 
         articoliService.InsArticolo(articolo);
 
-        return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(),"Inserimento articolo eseguito con successo"), HttpStatus.CREATED);
+        return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(), "Inserimento articolo eseguito con successo"), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/modifica", method=RequestMethod.PUT) // posso usare il requestmapping con qualsiasi chiamata l'importante che dopo specifico il metodo che voglio usare
+    @RequestMapping(value = "/modifica", method = RequestMethod.PUT)
+    // posso usare il requestmapping con qualsiasi chiamata l'importante che dopo specifico il metodo che voglio usare
     public ResponseEntity<InfoMsg> updateArt(@Valid @RequestBody Articoli articolo, BindingResult bindingResult) throws BindingException, NotFoundException, DuplicateException {
-    // simile al metodo insert
+        // simile al metodo insert
         logger.info("Aggiorniamo l'articolo con codice " + articolo.getCodArt());
 
         if (bindingResult.hasErrors()) {
             String msgErr = errMessage.getMessage(bindingResult.getFieldError(), LocaleContextHolder.getLocale());
             logger.warn(msgErr);
-            throw  new BindingException(msgErr);
+            throw new BindingException(msgErr);
         }
 
 
-        ArticoliDTO checkArt= articoliService.SelByCodArt(articolo.getCodArt());
-        if (checkArt != null)
-        {
+        ArticoliDTO checkArt = articoliService.SelByCodArt(articolo.getCodArt());
+        if (checkArt != null) {
             String MsgErr = String.format("Articolo %s presente in anagrafica! "
                     + "Impossibile utilizzare il metodo POST", articolo.getCodArt());
 
@@ -174,33 +173,32 @@ public class ArticoliController {
 
         articoliService.InsArticolo(articolo);
 
-        return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(),"Modifica articolo eseguita con successo"), HttpStatus.CREATED);
+        return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(), "Modifica articolo eseguita con successo"), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value="elimina/{codart}", method = RequestMethod.DELETE, produces="application/json")
-     public ResponseEntity<?> deleteArt(@PathVariable("codart") String CodArt) throws NotFoundException{ // il ? di domanda nella response enity non specifica che oggeto ha dentro
+    @RequestMapping(value = "elimina/{codart}", method = RequestMethod.DELETE, produces = "application/json")
+    public ResponseEntity<?> deleteArt(@PathVariable("codart") String CodArt) throws NotFoundException { // il ? di domanda nella response enity non specifica che oggeto ha dentro
         logger.info("Eliminiamo l'articolo con codice " + CodArt);
 
-        Articoli checkArt= articoliService.SelByCodArt2(CodArt);
+        Articoli checkArt = articoliService.SelByCodArt2(CodArt);
 
-        if (checkArt==null)
-        {
+        if (checkArt == null) {
             String msgErr = String.format("Articolo %s non presente in anagrafica!"
-                    +"impossibile utilizzare il metodo DELETE",CodArt);
+                    + "impossibile utilizzare il metodo DELETE", CodArt);
             logger.warn(msgErr);
 
-            throw  new NotFoundException(msgErr);// metodo uguale tranne per questa exception
+            throw new NotFoundException(msgErr);// metodo uguale tranne per questa exception
         }
         articoliService.DelArticolo(checkArt);
         //  sistema per visualizzare il risultato
-        ObjectMapper mapper= new ObjectMapper();
-        ObjectNode responseNode= mapper.createObjectNode();// è una mappa chiave valore in cui metto come chiave il code e il messagiio come valore lo statushttp in stringa
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode responseNode = mapper.createObjectNode();// è una mappa chiave valore in cui metto come chiave il code e il messagiio come valore lo statushttp in stringa
 
-        responseNode.put("code",HttpStatus.OK.toString());// il to string mi serve perchè httpStatus è un json
-        responseNode.put("messaggio","Eliminazione Articoli" + CodArt+"Eseguita con successo");// il to string mi serve perchè httpStatus è un json
+        responseNode.put("code", HttpStatus.OK.toString());// il to string mi serve perchè httpStatus è un json
+        responseNode.put("messaggio", "Eliminazione Articoli" + CodArt + "Eseguita con successo");// il to string mi serve perchè httpStatus è un json
         // eliminazione articolo eseguita con successo è il valore
 
-        return new ResponseEntity<>(responseNode, new HttpHeaders(),HttpStatus.OK);
-    // ho aggiunto il response node in modo da restituire un valore specifico
+        return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);
+        // ho aggiunto il response node in modo da restituire un valore specifico
     }
 }

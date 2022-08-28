@@ -7,20 +7,28 @@ server:
 spring:
   application:
     name: GestUser
-    datasource:
-      driverClassName: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/myDb
-      username: user1
-      password: pass
 #==========================================================
-#= PARAMETRI DB MONGODB 
+#= PARAMETRI DB MONGODB
+
+ # c'è l'autentication db che è admin, use admin poi ora
+  #uso mongo -u admin --authenticationDatabase admin -p root e mi autentico come admin nome admin
+  # ora creo user condb.createUser({
+  #    user:"pippo",
+  #    pwd:"D3mondante.@",
+  #    roles:[{ role: "readWrite", db: "ms-users"  }]
+  #})
+  #poi ora switcho mettendo nome e pass di questo utente
+  #mongo -u pippo--authenticationDatabase admin -p D3mondante.@
+  #ora  che sono nel nuovo utente uso
+  # use ms-users per spostarmi nel db del nuovo utente
+  # qui o creo le mie query o permetto tramite file yml a spring di farlo!!!
 #==========================================================
   data:
     mongodb:
       authentication-database: admin
       database: ms-users
       host: localhost
-      password: d3mondante
+      password: D3mondante.@
       port: 37017
-      username: souhail
+      username: pippo
       auto-index-creation: true

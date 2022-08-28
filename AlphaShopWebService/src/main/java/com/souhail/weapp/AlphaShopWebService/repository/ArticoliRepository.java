@@ -14,9 +14,10 @@ import java.util.List;
 // TRAMITE QUERY NATIVE
 @Repository
 @EnableJpaRepositories
-public interface ArticoliRepository extends  PagingAndSortingRepository <Articoli,String> { // questa interfaccia repository mi permette di eseguire le operazioni di pagging and sorting
-    @Query(value= "SELECT * FROM ARTICOLI WHERE DESCRIZIONE LIKE CONCAT('%',:desArt,'%')",nativeQuery = true) // uso la flag concat per concatenare le stringhe in sql cosi posso cercare una parola nella descrizione
-    List<Articoli> SelByDescrizioneLike (@Param("desArt") String descrizione );
+public interface ArticoliRepository extends PagingAndSortingRepository<Articoli, String> { // questa interfaccia repository mi permette di eseguire le operazioni di pagging and sorting
+    @Query(value = "SELECT * FROM ARTICOLI WHERE DESCRIZIONE LIKE CONCAT('%',:desArt,'%')", nativeQuery = true)
+        // uso la flag concat per concatenare le stringhe in sql cosi posso cercare una parola nella descrizione
+    List<Articoli> SelByDescrizioneLike(@Param("desArt") String descrizione);
 
 
     // query JPA facile facile non dovendo fare join
@@ -28,7 +29,7 @@ public interface ArticoliRepository extends  PagingAndSortingRepository <Articol
 // QUERY TRAMITE JPQl senza flag nativeQuery = true per fare selezioni classi entity
 // SENZA QUINDI DOVER CREARE I DUE SERVICE CREATI IN PRECEDENZA MA POTENDO USARE DIRETTAMENTE LA QUERY
 
-                             // SPIEGAZIONE QUERY JPQL
+    // SPIEGAZIONE QUERY JPQL
 //Seleziono tutti gli elementi A da classe entity Articoli (alias a elementi di Articoli)che sono IN join  grazie alla colonna  barcode
     //all'entità contente come chiave primaria barcode ,
 // infine dove da Barcode entity alias b prendo elemento con barcode=ean'
@@ -36,8 +37,8 @@ public interface ArticoliRepository extends  PagingAndSortingRepository <Articol
 
     // specificando come FILTRO il parametro ean quindi tutti gli articoli tra due tabelle con uno specifico barcode ean
 //@Query(value = "SELECT a FROM Articoli a JOIN a.barcode b WHERE b.barcode IN (:ean) ")
-@Query(value = "SELECT a FROM Articoli a JOIN a.barcode b WHERE b.barcode IN (:ean) ")
+    @Query(value = "SELECT a FROM Articoli a JOIN a.barcode b WHERE b.barcode IN (:ean) ")
     Articoli SelByEan(@Param("ean") String ean);// cerco articolo tramite ean che fa riferimento al parametro del nostro metodo anch'esso chiamato ean
-                                                // questo metodo ci restituirà una classe
+    // questo metodo ci restituirà una classe
 }
 

@@ -12,29 +12,30 @@ import java.util.Set;
 
 
 @Entity
-@Table(name="FAMASSORT")
+@Table(name = "FAMASSORT")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 /*
-* questa non è classe è un insulto
-*
-* */
+ * questa non è classe è un insulto
+ *
+ * */
 
 
 // TODO: 12/08/2022  IMPICCATI
 public class FamAssort {
     @Id
-    @Column(name="ID")
+    @Column(name = "ID")
     private int id;
 
-    @Column(name="DESCRIZIONE")
+    @Column(name = "DESCRIZIONE")
     private String descrizione;
 
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "famAssort") // il mappedby fa riferimento al nome della variabile associata all'altra parte
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "famAssort")
+    // il mappedby fa riferimento al nome della variabile associata all'altra parte
     @JsonBackReference
-    private Set<Articoli> articoli= new HashSet<>();
+    private Set<Articoli> articoli = new HashSet<>();
 
 
 }

@@ -18,12 +18,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.config.annotation.*;
+
 @Configuration
 @EnableWebSecurity// annotation per abilitare la sicurezza
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // CREO UTENTI HARDCODED
 
-    private static String REALM="REAME";// una variabile che serve per configurare i messaggi di errore
+    private static String REALM = "REAME";// una variabile che serve per configurare i messaggi di errore
 
     //NON INSERISCO PIù I DATI HARDCODE//
     /*@Bean
@@ -50,22 +51,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return manager;
     }*/
     @Autowired
-    @Qualifier("customerUserDetailsService")// è lo stesso nome inserito nella notazione service , permette di dare altri nomi e usare quelli come riferimento per le varie annotation
+    @Qualifier("customerUserDetailsService")
+// è lo stesso nome inserito nella notazione service , permette di dare altri nomi e usare quelli come riferimento per le varie annotation
     private UserDetailsService userDetailsService;
 
     //CONFIGURO LA SICUREZZA
 
     // creo un array di costanti in cui ho gli url accessibili dai tipi di utenti
-    private static final String[] USER_MATCHER ={"api/articoli/cerca/**"};
-    private static final String[] ADMIN_MATCHER ={
-                                                 "api/articoli/inserisci/**",// ** indica ogni cosa se ne metto 3 non funziona
-                                                 "api/articoli/modifica/**",
-                                                 "api/articoli/elimina/**"
-                                                 };
+    private static final String[] USER_MATCHER = {"api/articoli/cerca/**"};
+    private static final String[] ADMIN_MATCHER = {
+            "api/articoli/inserisci/**",// ** indica ogni cosa se ne metto 3 non funziona
+            "api/articoli/modifica/**",
+            "api/articoli/elimina/**"
+    };
 
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()        // csrf è un metodo che contrasta uno specifico attacco hacker ma che non serve nei service
 
                 .authorizeRequests()// AUTORIZZA AD ACCEDERE A SOLO DEGLI PATH URL IN BASE AL TIPO USER
@@ -79,27 +81,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         ;
     }
 
-     /**
-      *  @param auth
-      * riceve   userDetailsService
-      * che è globalmente visibile e
-      * in base ad esso gestisce l'autenticazione
+    /**
+     * @param auth riceve   userDetailsService
+     *             che è globalmente visibile e
+     *             in base ad esso gestisce l'autenticazione
      **/
-    @Autowired // faccio l'autowired del metodo stesso per usarlo dove mi pare senza richiamare l'intero oggetto in cui è contenuto
+    @Autowired
+    // faccio l'autowired del metodo stesso per usarlo dove mi pare senza richiamare l'intero oggetto in cui è contenuto
     public void configurationGlobal(AuthenticationManagerBuilder auth)
-    throws Exception{
+            throws Exception {
         // passo al gestore di autenticazione  auth lo userDetails e cripto la password , lui quindi
         auth.
                 userDetailsService(userDetailsService)
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
+
     @Bean // SISTEMA DI AUTENTICAZIONE
-    public AuthEntryPoint getBasicAuthEntryPoint(){
+    public AuthEntryPoint getBasicAuthEntryPoint() {
         return new AuthEntryPoint();
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception{
+    public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
         // tutti i metodi che riguardano option e qualsiasi url dovranno essere
         // IGNORATI DALLA SICUREZZA, è FONDAMENTALE PER FUNZIONARE CON IL FRONTEND

@@ -26,9 +26,10 @@ public class ArticoliServiceImpl implements  ArticoliService{
     public Iterable<Articoli> SelTutti() {
         return articoliRepository.findAll();
     }
+
     @Override
     public List<ArticoliDTO> SelByDescrizione(String descrizione) {
-        String filter=""+descrizione.toUpperCase()+"";
+        String filter = "" + descrizione.toUpperCase() + "";
         List<Articoli> articoliList = articoliRepository.SelByDescrizioneLike(filter);
         //ora dovendo trattare una lista di oggetti con gli spazi in statoart e unità misura
         // che non combacia con il mock
@@ -46,14 +47,14 @@ public class ArticoliServiceImpl implements  ArticoliService{
         // faccio stream di lista articoli(chiamato articoliList) a cui applico una map, una funzione lambda ad ogni elemento contenuto in articoli,
         // la funzione in se non è altro che un modelMapper che prende in ingresso class di partenza e tipo cllasse di arrivo
         // in modo da convertire elemento per elemento
-        List<ArticoliDTO> retVal= articoliList.stream().map(source->modelMapper.map(source, ArticoliDTO.class))
+        List<ArticoliDTO> retVal = articoliList.stream().map(source -> modelMapper.map(source, ArticoliDTO.class))
                 .collect(Collectors.toList());
-        return    retVal;
+        return retVal;
     }
 
     @Override
     public List<Articoli> SelByDescrizione(String descrizione, Pageable pageable) {
-        return articoliRepository.findByDescrizioneLike(descrizione,pageable);
+        return articoliRepository.findByDescrizioneLike(descrizione, pageable);
     }
 
 //    @Override
@@ -64,12 +65,12 @@ public class ArticoliServiceImpl implements  ArticoliService{
 
 
     /// metodo per convertire direttamente da entity a modell
-    private ArticoliDTO ConvertToDTO(Articoli articoli){
+    private ArticoliDTO ConvertToDTO(Articoli articoli) {
 
-       ArticoliDTO articoliDTO=null;
-        if(articoli!=null){
+        ArticoliDTO articoliDTO = null;
+        if (articoli != null) {
 
-            articoliDTO  = modelMapper.map(articoli, ArticoliDTO.class);
+            articoliDTO = modelMapper.map(articoli, ArticoliDTO.class);
             articoliDTO.setUm(articoliDTO.getUm().trim());// metto nel service la conversione del Um senza spazi tramite metodo trim()
             articoliDTO.setIdStatoArt(articoliDTO.getIdStatoArt().trim());// metto nel service la conversione del IdStatoArt senza spazi tramite metodo trim()
             articoliDTO.setDescrizione(articoliDTO.getDescrizione().trim());// idem per IdStatoArt
@@ -78,10 +79,10 @@ public class ArticoliServiceImpl implements  ArticoliService{
     }
 
     @Override
-    public ArticoliDTO SelByBarcode(String barcode){
-        Articoli articoli= articoliRepository.SelByEan(barcode);
+    public ArticoliDTO SelByBarcode(String barcode) {
+        Articoli articoli = articoliRepository.SelByEan(barcode);
 
-        return this.ConvertToDTO(articoli) ;
+        return this.ConvertToDTO(articoli);
     }
 
 
@@ -96,22 +97,23 @@ public class ArticoliServiceImpl implements  ArticoliService{
         articoliDTO.setIdStatoArt(articoliDTO.getIdStatoArt().trim());// idem per IdStatoArt
 
         return  articoliDTO;*/
-            Articoli articoli= articoliRepository.findByCodArt(codArt);
+        Articoli articoli = articoliRepository.findByCodArt(codArt);
 
-            return this.ConvertToDTO(articoli) ;
+        return this.ConvertToDTO(articoli);
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     @Transactional// i metodi che servono per cancellazione o inserimento sono di transazione
     public void DelArticolo(Articoli articolo) {
-     articoliRepository.delete(articolo);
+        articoliRepository.delete(articolo);
     }
 
     @Override
     @Transactional
     public void InsArticolo(Articoli articolo) {
-    articolo.setDescrizione(articolo.getDescrizione().toUpperCase());
-    articoliRepository.save(articolo);
+        articolo.setDescrizione(articolo.getDescrizione().toUpperCase());
+        articoliRepository.save(articolo);
     }
 
 

@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface ArticoliService  {
+public interface ArticoliService {
 // questo è l'elenco dei metodi che mi servono con ritorno parametri d'ingresso e e nome metodo
 
 
@@ -18,15 +18,16 @@ public interface ArticoliService  {
     public List<Articoli> SelByDescrizione(String descrizione, Pageable pageable);
     // nota ci sono più metodi di quelli dello stato di persistenza, perchè con la crudrepo ne ho di più
 
-//    public Articoli SelByCodArt(String codArt);
+    //    public Articoli SelByCodArt(String codArt);
 //    ora uso i dto
-  public ArticoliDTO SelByCodArt(String codArt);
+    public ArticoliDTO SelByCodArt(String codArt);
 
     public Articoli SelByCodArt2(String codArt);
 
     public ArticoliDTO SelByBarcode(String barcode);
 
     public void DelArticolo(Articoli articolo);
+
     public void InsArticolo(Articoli articolo);
 
 }

@@ -12,24 +12,26 @@ import java.util.Locale;
 @Configuration
 public class MessageConfig {
 
-    @Bean(name="validator") // questo bean che rinomino cosi per comodità, esiste giò in spring senza metterlo nel pom
-                            //  come al solito creo una sua istanza e poi lo uso per settare l'origine del messaggio
-    public LocalValidatorFactoryBean validator(){
-        LocalValidatorFactoryBean bean=new LocalValidatorFactoryBean();
+    @Bean(name = "validator") // questo bean che rinomino cosi per comodità, esiste giò in spring senza metterlo nel pom
+    //  come al solito creo una sua istanza e poi lo uso per settare l'origine del messaggio
+    public LocalValidatorFactoryBean validator() {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(messageSource()); // messageSource e un altro bean creato sotto a cui faccio riferimento
-        return  bean;
+        return bean;
 
     }
+
     @Bean
-    public SessionLocaleResolver localResolver(){ // ci permette di specificare la lingua
-        SessionLocaleResolver  sessionLocaleResolver= new SessionLocaleResolver();
+    public SessionLocaleResolver localResolver() { // ci permette di specificare la lingua
+        SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
         sessionLocaleResolver.setDefaultLocale(new Locale("it")); // forzo il sistema a usare una lingua, oppure
-       // sessionLocaleResolver.setDefaultLocale(LocaleContextHolder.getLocale());// GLI DICO DI PRENDERSI in automatico la  lingua in base alla lingua dove sta girando il web service
+        // sessionLocaleResolver.setDefaultLocale(LocaleContextHolder.getLocale());// GLI DICO DI PRENDERSI in automatico la  lingua in base alla lingua dove sta girando il web service
 
         return sessionLocaleResolver;
     }
+
     @Bean
-    public MessageSource messageSource(){ // ci permette di specificare il basename del file
+    public MessageSource messageSource() { // ci permette di specificare il basename del file
         ResourceBundleMessageSource resource = new ResourceBundleMessageSource();
         resource.setBasename("messages");
         resource.setUseCodeAsDefaultMessage(true);
