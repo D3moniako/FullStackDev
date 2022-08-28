@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "name": "getuser",
+      "type": "com.souhail.weapp.AlphaShopWebService.security.UserConfig",
+      "sourceType": "com.souhail.weapp.AlphaShopWebService.security.UserConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "getuser.password",
+      "type": "java.lang.String",
+      "sourceType": "com.souhail.weapp.AlphaShopWebService.security.UserConfig"
+    },
+    {
+      "name": "getuser.srv-url",
+      "type": "java.lang.String",
+      "sourceType": "com.souhail.weapp.AlphaShopWebService.security.UserConfig"
+    },
+    {
+      "name": "getuser.user-id",
+      "type": "java.lang.String",
+      "sourceType": "com.souhail.weapp.AlphaShopWebService.security.UserConfig"
+    }
+  ],
+  "hints": []
+}
