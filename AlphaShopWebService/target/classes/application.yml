@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: ProductWebService
+    name: ArticoliWebService
   #==========================================================
   #= PARAMETRI DBMS POSTGRESQL
   #==========================================================

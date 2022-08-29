@@ -15,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,9 +29,9 @@ import java.util.List;
 public class UtentiController {
     @Autowired
     private UtentiService utentiService;
-    @Autowired
+    /*@Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
+*/
     private ResourceBundleMessageSource errMessage = new ResourceBundleMessageSource();
 
     @GetMapping(value = "/cerca/tutti")
@@ -80,8 +79,12 @@ public class UtentiController {
             throw new BindingException(msgErr);
         }
 
+/*
         String encodedPassword = passwordEncoder.encode(utente.getPassword());
+*/
+/*
         utente.setPassword(encodedPassword);
+*/
         utentiService.save(utente);
 
         return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(),

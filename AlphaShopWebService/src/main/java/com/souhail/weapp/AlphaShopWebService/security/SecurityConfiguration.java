@@ -22,7 +22,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static String REALM = "REAME";// una variabile che serve per configurare i messaggi di errore
 
     //NON INSERISCO PIù I DATI HARDCODE//
-    /*@Bean
+@Bean
     @Override
     public UserDetailsService userDetailsService() {
         User.UserBuilder users= User.builder(); // COSTRUISCE UTENTI DIRETAAMENTE DALLA CLASSE USER
@@ -44,7 +44,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .build()
         );
         return manager;
-    }*/
+    }
+
     @Autowired
     @Qualifier("customerUserDetailsService")
 // è lo stesso nome inserito nella notazione service , permette di dare altri nomi e usare quelli come riferimento per le varie annotation
@@ -76,11 +77,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         ;
     }
 
-    /**
+*
      * @param auth riceve   userDetailsService
      *             che è globalmente visibile e
      *             in base ad esso gestisce l'autenticazione
-     **/
+     *
+
     @Autowired
     // faccio l'autowired del metodo stesso per usarlo dove mi pare senza richiamare l'intero oggetto in cui è contenuto
     public void configurationGlobal(AuthenticationManagerBuilder auth)
