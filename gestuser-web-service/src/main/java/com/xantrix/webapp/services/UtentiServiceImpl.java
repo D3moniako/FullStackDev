@@ -1,6 +1,8 @@
 package com.xantrix.webapp.services;
 
 import com.xantrix.webapp.models.Utenti;
+import com.xantrix.webapp.repository.UtentiRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,10 +12,12 @@ import java.util.List;
 @Transactional(readOnly = true)// nota non funziona se uso import diversi da springframework.annotation
 public class UtentiServiceImpl implements UtentiService {
 
+    @Autowired
+    UtentiRepository utentiRepository;
 
     @Override
     public List<Utenti> selTutti() {
-        return null;
+        return utentiRepository.findAll();
     }
 
     /**
@@ -22,7 +26,7 @@ public class UtentiServiceImpl implements UtentiService {
      */
     @Override
     public Utenti selUser(String userId) {
-        return null;
+        return utentiRepository.findByUserId(userId);
     }
 
     /**
@@ -30,7 +34,7 @@ public class UtentiServiceImpl implements UtentiService {
      */
     @Override
     public void save(Utenti utente) {
-
+        utentiRepository.save(utente);
     }
 
     /**
@@ -38,6 +42,6 @@ public class UtentiServiceImpl implements UtentiService {
      */
     @Override
     public void delete(Utenti utente) {
-
+        utentiRepository.delete(utente);
     }
 }

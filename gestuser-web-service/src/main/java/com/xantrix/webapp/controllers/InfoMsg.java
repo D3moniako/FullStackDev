@@ -8,7 +8,7 @@ import java.time.LocalDate;
 // TODO :FATTO!
 @AllArgsConstructor
 @Data
-public class InfoMSg {
+public class InfoMsg {
 
     public LocalDate data;
 

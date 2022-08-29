@@ -55,7 +55,7 @@ public class Articoli implements Serializable {
 
     @Column(name = "PZCART")
     @Max(value = 99, message = "{Size.Articoli.pzCart.Validation}")
-    private int pzCart;
+    private Integer pzCart;
 
 
     @Column(name = "PESONETTO")

@@ -48,7 +48,7 @@ public class UtentiController {
         log.info("Otteniamo l'utente" + userId);
         Utenti utente = utentiService.selUser(userId);
         if (utente == null) {
-            String errMsg = String.format("L'utente %s non è autenticato", userId);
+            String errMsg = String.format("L'utente %s non è stato trovato", userId);
             log.warning(errMsg);
             throw new NotFoundException(errMsg);
         }
@@ -57,10 +57,9 @@ public class UtentiController {
     }
 
     ///////////////INSERIMENTO/MODIFICA UTENTE
-    @GetMapping(value = "cerca")
     //questo metodo non  solo inserisce un nuovo utente ma lo modifica anche la modifica
     @PostMapping(value = "/inserisci")
-    public ResponseEntity<InfoMSg> addNewUser
+    public ResponseEntity<InfoMsg> addNewUser
     (@Valid @RequestBody Utenti utente, BindingResult bindingResult) throws BindingException {
 
         Utenti checkUtente = utentiService.selUser(utente.getUserId());
@@ -85,7 +84,7 @@ public class UtentiController {
         utente.setPassword(encodedPassword);
         utentiService.save(utente);
 
-        return new ResponseEntity<InfoMSg>(new InfoMSg(LocalDate.now(),
+        return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(),
                 String.format("Inserimento Utente %s Eseguita Con Successo", utente.getUserId())), HttpStatus.CREATED);
     }
 

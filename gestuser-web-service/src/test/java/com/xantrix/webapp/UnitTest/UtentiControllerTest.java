@@ -60,6 +60,7 @@ public class UtentiControllerTest {
     @Test
     @Order(1) // simulo inserimento utente in mongo, test come al solito
     public void testInsUtente1() throws Exception {
+        utentiRepository.deleteAll();
         mockMvc.perform(MockMvcRequestBuilders.post("/api/utenti/inserisci")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonData)
@@ -71,14 +72,13 @@ public class UtentiControllerTest {
     @Test
     @Order(2)
     public void testListUserByUserId() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/utenti/cerca/userid/Nicola")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/utenti/cerca/userId/Souhail")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.userId").exists())
-                .andExpect(jsonPath("$.userId").value("Nicola"))
+                .andExpect(jsonPath("$.userId").value("Souhail"))
                 .andExpect(jsonPath("$.password").exists())
                 .andExpect(jsonPath("$.attivo").exists())
                 .andExpect(jsonPath("$.attivo").value("Si"))
@@ -87,16 +87,16 @@ public class UtentiControllerTest {
                 .andExpect(jsonPath("$.ruoli[0]").value("USER"))
                 .andDo(print());
 
-        assertThat(passwordEncoder.matches("123_Stella",
-                utentiRepository.findByUserId("Nicola").getPassword()))
+        assertThat(passwordEncoder.matches("d3mondante",
+                utentiRepository.findByUserId("Souhail").getPassword()))
                 .isEqualTo(true);
     }
 
     // crea utente amministratore
     String JsonData2 =
             "{\n" +
-                    "    \"userId\": \"Admin\",\n" +
-                    "    \"password\": \"VerySecretPwd\",\n" +
+                    "    \"userId\": \"pippo\",\n" +
+                    "    \"password\": \"D3mondante.@\",\n" +
                     "    \"attivo\": \"Si\",\n" +
                     "    \"ruoli\": [\n" +
                     "            \"USER\",\n" +
@@ -118,16 +118,16 @@ public class UtentiControllerTest {
     String JsonDataUsers =
             "[\n" +
                     "	{\n" +
-                    "	    \"userId\": \"Nicola\",\n" +
-                    "	    \"password\": \"123_Stella\",\n" +
+                    "	    \"userId\": \"Souhail\",\n" +
+                    "	    \"password\": \"d3mondante\",\n" +
                     "	    \"attivo\": \"Si\",\n" +
                     "	    \"ruoli\": [\n" +
                     "		    \"USER\"\n" +
                     "		]\n" +
                     "	},\n" +
                     "	{\n" +
-                    "	    \"userId\": \"Admin\",\n" +
-                    "	    \"password\": \"VerySecretPwd\",\n" +
+                    "	    \"userId\": \"pippo\",\n" +
+                    "	    \"password\": \"D3mondante.@\",\n" +
                     "	    \"attivo\": \"Si\",\n" +
                     "	    \"ruoli\": [\n" +
                     "		    \"USER\",\n" +
@@ -147,7 +147,7 @@ public class UtentiControllerTest {
                 //UTENTE 1
                 .andExpect(jsonPath("$[0].id").exists())
                 .andExpect(jsonPath("$[0].userId").exists())
-                .andExpect(jsonPath("$[0].userId").value("Nicola"))
+                .andExpect(jsonPath("$[0].userId").value("Souhail"))
                 .andExpect(jsonPath("$[0].password").exists())
                 .andExpect(jsonPath("$[0].attivo").exists())
                 .andExpect(jsonPath("$[0].attivo").value("Si"))
@@ -156,7 +156,7 @@ public class UtentiControllerTest {
                 //UTENTE 2
                 .andExpect(jsonPath("$[1].id").exists())
                 .andExpect(jsonPath("$[1].userId").exists())
-                .andExpect(jsonPath("$[1].userId").value("Admin"))
+                .andExpect(jsonPath("$[1].userId").value("pippo"))
                 .andExpect(jsonPath("$[1].password").exists())
                 .andExpect(jsonPath("$[1].attivo").exists())
                 .andExpect(jsonPath("$[1].attivo").value("Si"))
@@ -166,8 +166,8 @@ public class UtentiControllerTest {
                 .andExpect(jsonPath("$[1].ruoli[1]").value("ADMIN"))
                 .andReturn();
 
-        assertThat(passwordEncoder.matches("VerySecretPwd",
-                utentiRepository.findByUserId("Admin").getPassword()))
+        assertThat(passwordEncoder.matches("D3mondante.@",
+                utentiRepository.findByUserId("pippo").getPassword()))
                 .isEqualTo(true);
     }
 
@@ -175,22 +175,22 @@ public class UtentiControllerTest {
     @Test
     @Order(5)
     public void testDelUtente1() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/utenti/elimina/Nicola")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/utenti/elimina/Souhail")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("200 OK"))
-                .andExpect(jsonPath("$.message").value("Eliminazione Utente Nicola Eseguita Con Successo"))
+                .andExpect(jsonPath("$.message").value("Eliminazione Utente Souhail Eseguita Con Successo"))
                 .andDo(print());
     }
 
     @Test
     @Order(6)
     public void testDelUtente2() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/utenti/elimina/Admin")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/utenti/elimina/pippo")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("200 OK"))
-                .andExpect(jsonPath("$.message").value("Eliminazione Utente Admin Eseguita Con Successo"))
+                .andExpect(jsonPath("$.message").value("Eliminazione Utente pippo Eseguita Con Successo"))
                 .andDo(print());
     }
 

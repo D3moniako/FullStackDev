@@ -25,6 +25,10 @@ public interface ArticoliRepository extends PagingAndSortingRepository<Articoli,
     // query JPA facile facile non dovendo fare join
     Articoli findByCodArt(String codArt);
 
+    /**
+     * codArt in articoli è Integer , qua essendo string primitiva maggiore allora viene castata
+     **/
+
 // QUERY TRAMITE JPQl senza flag nativeQuery = true per fare selezioni classi entity
 // SENZA QUINDI DOVER CREARE I DUE SERVICE CREATI IN PRECEDENZA MA POTENDO USARE DIRETTAMENTE LA QUERY
 
