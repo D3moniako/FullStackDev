@@ -59,12 +59,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         manager.createUser(users
                 .username("ReadUser")
-                .password(new BCryptPasswordEncoder().encode("D3mondante.@0071"))
+                // password presente nel file yml del articoli service, quindi articoli si collega dal file yml come entrypoint
+                // tramite questa password
+                .password(new BCryptPasswordEncoder().encode("BimBumBam_2018"))
                 .roles("USER").build());
 
         manager.createUser(users
                 .username("Admin")
-                .password(new BCryptPasswordEncoder().encode("D3mondante.@0071"))
+                .password(new BCryptPasswordEncoder().encode("MagicaBula_2018"))
                 .roles("USER", "ADMIN").build());
 
         return manager;

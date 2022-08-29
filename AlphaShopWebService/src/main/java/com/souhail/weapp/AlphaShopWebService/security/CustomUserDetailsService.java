@@ -1,10 +1,9 @@
 package com.souhail.weapp.AlphaShopWebService.security;
 
-import com.xantrix.webapp.models.Utenti;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.support.BasicAuthenticationInterceptor;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -42,7 +41,7 @@ public class CustomUserDetailsService implements UserDetailsService {// l'interf
         // DATO CHE I DATI ARRIVANO IN FORMATO JSON DEVO EFFETTUARE òA DESERIALIZZAZIONE
         // CREO UNA CLASSE SIMILE ALLA CLASSE UTENTI
         // dal secondo metodo mi prendo utenti
-
+        // utenti è una classe public nello stesso pacchetto quindi la posso usare senza istanziarla
         Utenti utente = this.GetHttpValue(userId);// variabile a cui passo metodo GetHTTPvalue che mi torna un oggetto utente
         // se mi passa una variabile null allora faccio partire un errore
         if (utente == null) {
@@ -52,10 +51,11 @@ public class CustomUserDetailsService implements UserDetailsService {// l'interf
         }
         //altrimenti devo costruire dei dati da quel utente trasformandoli in userdetails che poi viene usato dal sistema di sicurezza
         // COME LO FACCIO?
-        User.UserBuilder builder = null;// istanzio un oggetto builder
+        UserBuilder builder = null;// istanzio un oggetto builder
 
         builder = org.springframework.security.core.userdetails.User.withUsername(utente.getUserId());
-        builder.disabled((utente.getAttivo().equals("Si") ? false : true)); // passo al builder dall'utente lo stato utente che è un booleano,se lo stato è si allora è falso altrimenti true
+        builder.disabled((utente.getAttivo().equals("Si") ? false : true));
+        // passo al builder dall'utente lo stato utente che è un booleano,se lo stato è si allora è falso altrimenti true
         builder.password(utente.getPassword()); // passo anche la password ricavata da db mongo e salvata in utenti
 
         // creo un array di profili ottenendo i ruoli a cui applico una stream map che trasforma ogni
@@ -95,7 +95,6 @@ public class CustomUserDetailsService implements UserDetailsService {// l'interf
         restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(config.getUserId(), config.getPassword()));
 
 
-        //
         Utenti utente = null;
         try {
             utente = restTemplate.getForObject(url, Utenti.class);

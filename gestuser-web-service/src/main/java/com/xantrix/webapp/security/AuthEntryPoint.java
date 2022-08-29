@@ -14,7 +14,7 @@ public class AuthEntryPoint extends BasicAuthenticationEntryPoint {
     @Override
     public void commence(final HttpServletRequest request, final HttpServletResponse response,
                          final AuthenticationException authException) throws IOException {
-        String ErrMsg = "Userid e/o Password non corrette!";
+        String errMsg = "Userid e/o Password non corrette!";
 
         log.warning("Errore Sicurezza: " + authException.getMessage());
 
@@ -24,7 +24,7 @@ public class AuthEntryPoint extends BasicAuthenticationEntryPoint {
         response.addHeader("WWW-Authenticate", "Basic realm=" + getRealmName() + "");
 
         PrintWriter writer = response.getWriter();
-        writer.println(ErrMsg);
+        writer.println(errMsg);
     }
 
     @Override
