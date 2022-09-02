@@ -41,6 +41,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /// GESTIONE ERRORE NEL CASO DI ARTICOLI INSERITI CON CODART DUPLICATO
+
     @ExceptionHandler(DuplicateException.class)
     public final ResponseEntity<ErrorResponse> exceptionDuplicateHandler(Exception ex) {
 

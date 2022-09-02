@@ -13,12 +13,13 @@ import java.util.Date;
 @Component
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
-    @Value("${spring.jwt.jwtSecret}")
+    @Value("${spring.jwt.jwtSecret}") // ${} permette di richiamare una variabile dallo yaml
     private String jwtSecret;
 
     @Value("${spring.jwt.jwtExpirationMs}")
     private int jwtExpirationMs;
 
+    // genero il token
     public String generateJwtToken(Authentication authentication) {
 
         SecurityUserDetail userPrincipal = (SecurityUserDetail) authentication.getPrincipal();
@@ -31,10 +32,12 @@ public class JwtUtils {
                 .compact();
     }
 
+    // ottiene username dal token
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 
+    // vede se la jwt è validata o no
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);

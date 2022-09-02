@@ -32,3 +32,18 @@ spring:
       port: 37017
       username: pippo
       auto-index-creation: true
+
+      ################################REDJWT###############################
+  jwt:
+    header: Authorization
+    # This token must be encoded using Base64 with mininum 88 Bits (you can type echo 'secret-key'|base64 on your command line)
+    #checked
+    jwtSecret: Wm1RMFpHSTVOalEwTURRd1kySTRNak14WTJZM1ptSTNNamRoTjJabU1qTmhPRFZpT1RnMVpHRTBOVEJqTUdNNE5EQTVOell4TWpkak9XTXdZV1JtWlRCbFpqbGhOR1kzWlRnNFkyVTNZVEUxT0RWa1pEVTVZMlkzT0dZd1pXRTFOelV6TldRMllqRmpaRGMwTkdNeFpXVTJNbVEzTWpZMU56Sm1OVEUwTXpJPQo=
+    # token is valid 12 hours
+    jwtExpirationMs: 5000000
+      # valid 20 hours
+      #token-validity-in-seconds-for-remember-me: 88000
+    #route:
+    # authentication:
+    #  path: auth
+    #  refresh: refresh
